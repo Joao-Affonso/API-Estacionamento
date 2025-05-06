@@ -1,0 +1,21 @@
+# Ignorar virtualenv
+venv/
+
+# Ignorar banco de dados local
+db.sqlite3
+
+# Ignorar arquivos de ambiente
+.env
+
+# Ignorar caches e compilados
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Arquivos de IDEs
+.vscode/
+.idea/
+
+# Outros arquivos que o Docker pode gerar
+*.log

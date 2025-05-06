@@ -1,6 +1,5 @@
 services:
 
-
   parking_service:
     build: .
     command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
@@ -10,6 +9,8 @@ services:
     depends_on:
       - parking_db
       - rabbitmq
+    env_file:
+      - .env
 
   worker:
     build: .
@@ -18,6 +19,8 @@ services:
     depends_on:
       - parking_db
       - rabbitmq
+    env_file:
+      - .env
 
   parking_db:
     image: postgres:15
@@ -25,23 +28,15 @@ services:
       - 5432:5432
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=parking_service
+    env_file:
+      - .env
 
   rabbitmq:
     image: rabbitmq:4.0-management
     ports: 
       - 5672:5672
       - 15672:15672
-    environment:
-      - RABBITMQ_DEFAULT_USER=guest
-      - RABBITMQ_DEFAULT_PASS=guest
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
-
-
-volumes:
-  postgres_data:
-  rabbitmq-data:
+    env_file:
+      - .env
